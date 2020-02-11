@@ -1,0 +1,84 @@
+// The following contract implements multisig with the following semantics:
+// ((1 of 4) AND (3 of 3)) OR ((3 of 4) AND (1 of 3))
+
+// First, check all signatures from the first group (group of 4)
+
+txn TxID
+arg 0
+addr TMPL_KEY_1_4
+ed25519verify
+
+txn TxID
+arg 1
+addr TMPL_KEY_2_4
+ed25519verify
++
+
+txn TxID
+arg 2
+addr TMPL_KEY_3_4
+ed25519verify
++
+
+txn TxID
+arg 3
+addr TMPL_KEY_4_4
+ed25519verify
++
+
+// Store sum in scratch space 0
+store 0
+
+// Next, check all signatures from the second group (group of 3)
+
+txn TxID
+arg 4
+addr TMPL_KEY_1_3
+ed25519verify
+
+txn TxID
+arg 5
+addr TMPL_KEY_2_3
+ed25519verify
++
+
+txn TxID
+arg 6
+addr TMPL_KEY_3_3
+ed25519verify
++
+
+// Store sum in scratch space 1
+store 1
+
+// Now, check the following:
+// ((1 of 4) AND (3 of 3)) OR ((3 of 4) AND (1 of 3))
+
+lhs:
+
+// At least 1/4
+load 0
+int 1
+>=
+
+// All 3/3
+load 1
+int 3
+>=
+&&
+
+rhs:
+
+// At least 3/4
+load 0
+int 3
+>=
+
+// At least 1/3
+load 1
+int 1
+>=
+&&
+
+// lhs or rhs must be true
+||
