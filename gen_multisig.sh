@@ -81,13 +81,13 @@ goal clerk rawsend -f tosign.tx -d $1 || true
 
 # Now, give enough signatures
 
-# Fill placeholder sigs for 4 multisig (all sigs from key 1/4)
+# 3/4 correct sigs for the group of 4 keys
 goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 0
 goal clerk tealsign --sign-txid --keyfile keys/2_4 --lsig-txn tosign.tx --set-lsig-arg 1
 goal clerk tealsign --sign-txid --keyfile keys/3_4 --lsig-txn tosign.tx --set-lsig-arg 2
 goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 3
 
-# Fill placeholder  --sign-txidsigs for 3 multisig (all sigs from key 1/3)
+# 2/3 correct sigs for the group of 3 keys
 goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 4
 goal clerk tealsign --sign-txid --keyfile keys/2_3 --lsig-txn tosign.tx --set-lsig-arg 5
 goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 6
