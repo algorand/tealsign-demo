@@ -66,15 +66,15 @@ rm -f tosign.tx.rej
 goal clerk send -F contract.teal -t $RECIPIENT -o tosign.tx -a 1234 -d $1
 
 # Fill placeholder sigs for 4 multisig (all sigs from key 1/4)
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 0
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 1
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 2
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 3
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 0
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 1
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 2
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 3
 
 # Fill placeholder  --sign-txidsigs for 3 multisig (all sigs from key 1/3)
-goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 4
-goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 5
-goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 6
+goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg-idx 4
+goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg-idx 5
+goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg-idx 6
 
 # Try broadcasting (not enough sigs)
 goal clerk rawsend -f tosign.tx -d $1 || true
@@ -82,15 +82,15 @@ goal clerk rawsend -f tosign.tx -d $1 || true
 # Now, give enough signatures
 
 # 3/4 correct sigs for the group of 4 keys
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 0
-goal clerk tealsign --sign-txid --keyfile keys/2_4 --lsig-txn tosign.tx --set-lsig-arg 1
-goal clerk tealsign --sign-txid --keyfile keys/3_4 --lsig-txn tosign.tx --set-lsig-arg 2
-goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg 3
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 0
+goal clerk tealsign --sign-txid --keyfile keys/2_4 --lsig-txn tosign.tx --set-lsig-arg-idx 1
+goal clerk tealsign --sign-txid --keyfile keys/3_4 --lsig-txn tosign.tx --set-lsig-arg-idx 2
+goal clerk tealsign --sign-txid --keyfile keys/1_4 --lsig-txn tosign.tx --set-lsig-arg-idx 3
 
 # 2/3 correct sigs for the group of 3 keys
-goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 4
-goal clerk tealsign --sign-txid --keyfile keys/2_3 --lsig-txn tosign.tx --set-lsig-arg 5
-goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg 6
+goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg-idx 4
+goal clerk tealsign --sign-txid --keyfile keys/2_3 --lsig-txn tosign.tx --set-lsig-arg-idx 5
+goal clerk tealsign --sign-txid --keyfile keys/1_3 --lsig-txn tosign.tx --set-lsig-arg-idx 6
 
 # Should succeed (unless insufficient balance)
 rm -f tosign.tx.rej
